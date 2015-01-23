@@ -1,0 +1,5 @@
+name = "Alma Chen"
+SID = "24428293"
+email = "almachen@berkeley.edu"
+github_name = "almachen"
+status = "enrolled"
