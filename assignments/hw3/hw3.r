@@ -69,19 +69,19 @@ load("WR1500MeterMen.rda")
 
 # Q1a. How many world records does this data frame contain?
 #
-# n.wr <- your code here
+n.wr <- nrow(wr1500m)
 
 # Q1b. Use R commands to find out who currently holds the world
 # record in the men's 1500 meter.
  
-# wr.name <- your code here
+wr.name <- wr1500m[which.min(wr1500m$times), 4] # check this
 
 # Let's look at the relationship between date and time.
 # Q1c. What type of variable (numeric (continuous or discrete), nominal ordinal)
 # are year and times? (no need to use R code to answer this question)
 
-### year : discrete
-### times : continuous
+ year : discrete
+times : continuous
 
 # When we are examining a variable to see how it changes in time,
 # we typically make a line plot, with time on the x-axes and 
@@ -93,11 +93,11 @@ load("WR1500MeterMen.rda")
 # store that in a new variable and add to the data frame.
 # Hint: which geom_* function creates a step plot?
 
-# times_sec <- your code here
-# wr1500m <- your code here
+times_sec <- (wr1500m$times)+180
+wr1500m <- cbind(wr1500m, times_sec)
 
 # Your ggplot / qplot command:
-
+qplot(wr1500m$year, wr1500m$times_sec, geom = "step", direction = "hv")
 
 # Q2b. Redo the plot using a date that incorporates the month as 
 # well as the year. For example, in Sep 1904 the world record 
@@ -107,11 +107,12 @@ load("WR1500MeterMen.rda")
 # first find and set all missing months to 0.5
 # Add new_year to the dataframe.
 
-# new_year <- your code here
-# wr1500m <- your code here
+new_year <- (wr1500m$month)/12 + wr1500m$year
+wr1500m <- cbind(wr1500m, new_year)
+wr1500m[1,7]<-1892.5
 
 # Your qplot command:
-
+qplot(wr1500m$year, wr1500m$times_sec, geom = "step", direction = "hv")
 
 # Q3. The current world record was set in 1998. If we want to
 # show that this record still stands in 2015, we could add a 
@@ -120,9 +121,11 @@ load("WR1500MeterMen.rda")
 # Hint: which geom_* function adds a line segment?
 # Hint: look at xlim() and theme().
 
-# wr_1998 <- your code here
-
 # Your ggplot command:
+
+wr_1998 <- geom_segment(aes(x = 1998.583, y = 206.00, xend = 2015, yend = 206.00))
+qplot(wr1500m$new_year, wr1500m$times_sec, geom = "step", direction = "hv") + wr_1998
+
 
 # Q4. There are two times where the record stood for several
 # years - in 1944 and 1998. Let's make it easier to see these
@@ -135,11 +138,20 @@ load("WR1500MeterMen.rda")
 # of wr1500m$athlete to access it.
 # Hint: geom_vline(), annotate().
 
-
-# wr_1944 <- your code here
-
 # Your ggplot command
 
+wr_1944 <- geom_segment(aes(x = 1944, y = 213, xend = 1944, yend = 233), colour = "green")
+wr_1998v <- geom_segment(aes(x = 1998, y = 196, xend = 1998, yend = 216), colour = "green")
+qplot(wr1500m$new_year, wr1500m$times_sec, geom = "step", direction = "hv") + wr_1998 + wr_1944 + wr_1998v
+p <- qplot(wr1500m$new_year, wr1500m$times_sec, geom = "step", direction = "hv") + wr_1998 + wr_1944 + wr_1998v
+
+haag <- annotate("text", x = 1940, y = 222,label = wr1500m[26,4], colour = "blue")
+guerrouj <- annotate("text", x = 1998, y = 213,label = wr1500m[51,4], colour = "blue")
+
+p + haag + guerrouj 
+pwnames <- p + haag + guerrouj 
+
+#HOW TO ACCESS NAME WWITH WR1500M$ATHLETE!!!!!!!!!!!!!!!!!!! 
 
 # Q5. Now we are ready to add other contextual information.
 # Remake the plot as before but now adding axis labels and a title.
@@ -147,7 +159,8 @@ load("WR1500MeterMen.rda")
 # Hint : labs()
 
 # Your ggplot commands
-
+wr1500m_finalplot <- pwnames + labs(title = "Mens 1500m World Record Times", x = "Year", y = "Times (sec)")
+wr1500m_finalplot 
 
 ################################
 # PLOT 2
@@ -179,6 +192,9 @@ load("SummerOlympics2012Ctry.rda")
 # the number of medals. 
 
 # To begin, make a plot of GDP against population. Your ggplot command:
+ggplot(SO2012Ctry, aes(x = SO2012Ctry$pop, y = SO2012Ctry$GDP)) + geom_point()
+GDPvspop <- ggplot(SO2012Ctry, aes(x = SO2012Ctry$pop, y = SO2012Ctry$GDP)) + geom_point()
+GDPvspop
 
 
 #Q7. Let's examine GDP per person (create this new variable yourself)
@@ -188,11 +204,12 @@ load("SummerOlympics2012Ctry.rda")
 # Do not log the variables directly.
 # Hint: use the options log and size.
 
-# GDP_per_person <- your code here
-# SO2012Ctry <- your code here
-# symbols( your code here )
+GDP_per_person <- SO2012Ctry$GDP/SO2012Ctry$pop
+SO2012Ctry <- cbind(SO2012Ctry, GDP_per_person)
+symbols(log(SO2012Ctry$pop), log(SO2012Ctry$GDP), circles = SO2012Ctry$Total, inches = 0.5)
 
 # Your ggplot command
+ggplot(SO2012Ctry, aes(x = log(SO2012Ctry$pop), y = log(SO2012Ctry$GDP))) + geom_point(aes(size = SO2012Ctry$Total))
 
 
 # We skip Q8 this time the plot above is already fine.
@@ -205,6 +222,18 @@ load("SummerOlympics2012Ctry.rda")
 
 # Your ggplot command:
 
+
+labeled_graph <- ggplot(SO2012Ctry, aes(x = log(SO2012Ctry$pop), y = log(SO2012Ctry$GDP))) + geom_point(aes(size = SO2012Ctry$Total)) + labs(x="Population (log scale)", y = "GDP (log scale)", title = "GDP vs Population vs Olympic Medals")
+GBR <- annotate("text", x = 17.23, y= 28.55, label = "GBR")
+Russia <- annotate("text", x = 19.9, y= 28.1, label = "Russia")
+Nauru <- annotate("text", x = 10, y= 17, label = "Nauru")
+China <- annotate("text", x = 22, y= 29.1, label = "China")
+USA <- annotate("text", x = 19, y= 31, label = "USA")
+final_graph <- labeled_graph + USA + China + Nauru + GBR + Russia
+final_graph 
+
+
+
 ######################################
 # PLOT 3.
 # Plotting points on maps can help us see geographic relationships
@@ -215,6 +244,7 @@ library("maps")
 # Hint: look at map_data() and geom_polygon() in the ggplot2 manual.
 
 # Your ggplot commands:
+map("world", fill = TRUE, col = "grey87")
 
 
 # Q11. Now add circles to the map where
@@ -225,7 +255,7 @@ library("maps")
 # Consider using the colors "grey40" and "grey90" for the map and "gold" for the circles.
 # Hint: look at the function [geom_point()] and the parameters [aes] and [size]
 
-# wonMedal <- your code here
+wonMedal <- 
 
 # Your ggplot commands here.
 
@@ -259,6 +289,9 @@ load("London2012ALL_ATHLETES.rda")
 # find the option that allows you to put bars side-by-side (study the manual page)
 
 # make barplot with ggplot
+
+
+
 
 
 ## Skip this question...
