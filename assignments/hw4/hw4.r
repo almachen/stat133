@@ -15,7 +15,14 @@
 
 listLengths <- function(data.list) {
 
-    # your code here
+len = length(data.list)
+k <- 1
+v<- c(length(data.list[[k]]))
+k <- k +1 
+while(k<len+1){
+  v<-c(v, length(data.list[[k]])); k <- k +1; 
+}
+return (v) 
 
 }
 
@@ -32,7 +39,26 @@ listLengths <- function(data.list) {
 
 powers <- function(x, k){
 
+i<-1 
+
+n <- length(x)
+x.powers <- matrix(, nrow = n, ncol = k)
+for(i in 1:k){
+    v<- c()
+    for(j in 1:n){
+      v<-c(v, x[j]^i) 
+    }
+    
+    x.powers[, i] <- v 
+    
+  }
+  
+
+colnames(x.powers) <- c(paste0("X^", 1:k, sep = " ")) 
+rownames(x.powers) <- c(paste0("", 1:n, sep = " " )) 
+return(x.powers) 
 }
+
 
  
 #### Function #3
@@ -64,8 +90,28 @@ powers <- function(x, k){
 
 # Put your code here
 recipeConversion <- function(recipe){
-
+  if(!all(colnames(recipe) == c("amount", "unit", "ingredient")))
+    stop("recipe must have amount, unit, ingredient")
+  recipe$unit=as.character(recipe$unit)   
+  for (i in 1:nrow(recipe)){
+    if(recipe$unit[i]=="oz"){
+      recipe$unit[i]<-"gr"
+      recipe$amount[i]<-28.3*recipe$amount[i]
+      recipe$amount[i]<-5*round(recipe$amount[i]/5) 
+    }
+    else if((recipe$unit[i] =="cup") || (recipe$unit[i]=="cups")){
+      recipe$unit[i]<-"mL"
+      recipe$amount[i]<-236.6*recipe$amount[i]
+      recipe$amount[i]<-5*round(recipe$amount[i]/5)
+    }
+    
+  }
+recipe.metric = recipe
+return (recipe.metric)
 }
+  
+  
+
 
 
 #### Function #4a
@@ -90,7 +136,13 @@ recipeConversion <- function(recipe){
 # -- The bootstrap variance is the sample variance of mu_1, mu_2, ..., mu_B
 
 bootstrapVarEst <- function(x, B){
-
+  
+ list_of_means = c()
+ for (i in 1:B){
+   list_of_means <-c(list_of_means, mean(sample(x, length(x), replace = TRUE)))  
+ }
+ boot.sigma2.est <- var(list_of_means)
+ return (boot.sigma2.est)
 }
 
 #### Function #4b
@@ -111,8 +163,16 @@ bootstrapVarEst <- function(x, B){
 #     for this reduced sample calculate the sample mean (get mu_1, mu_2, ..., mu_n)
 # -- The jackknife variance is the sample variance of mu_1, mu_2, ..., mu_n
 
-jackknifeVarEst <- fuction(x){
 
+jackknifeVarEst <- function(x){
+  list_of_means = c() 
+  n = length(x)
+  for (i in 1:n){
+    listavg = x[-i] 
+    list_of_means <- c(list_of_means, mean(listavg))
+  }
+  jack.sigma2.est <- var(list_of_means)
+  return(jack.sigma2.est)
 }
 
 #### Function #4c
@@ -127,7 +187,12 @@ jackknifeVarEst <- fuction(x){
 
 # Note: this function calls the previous two functions.
 
-samplingVarEst <- function(  ){
+samplingVarEst <- function(x, type){
+  
+  if(as.character(type) == "jackknife"){
+    return(jackknifeVarEst(x))
+  }
+  return(bootstrapVarEst(x)) 
 
 }
 
