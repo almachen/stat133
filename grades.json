@@ -1,0 +1,23 @@
+{
+    "email": "almachen@berkeley.edu", 
+    "github_name": "almachen", 
+    "grades": {
+        "hw1": {
+            "note": "", 
+            "hash": "cf3afd652f2f010429b2f2c810e2e101bbad276f", 
+            "earned": 16, 
+            "possible": 20, 
+            "penalty": 0, 
+            "parts": {
+                "hw1": {
+                    "possible": 20, 
+                    "earned": 16
+                }
+            }
+        }
+    }, 
+    "login": "almachen", 
+    "name": "Alma Chen", 
+    "status": "enrolled", 
+    "url": "git@github.com:almachen/stat133.git"
+}
