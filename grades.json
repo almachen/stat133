@@ -19,5 +19,6 @@
     "login": "almachen", 
     "name": "Alma Chen", 
     "status": "enrolled", 
-    "url": "git@github.com:almachen/stat133.git"
+    "url": "git@github.com:almachen/stat133.git", 
+    "section": "lab2"
 }
