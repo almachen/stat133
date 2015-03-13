@@ -1,7 +1,7 @@
 # Please load in the dataset included in the midterm1 directory. It will be
 # required to perform the following tasks. The dataset includes data for countries in 2012.
 
-load(SO20102Ctry.rda) 
+load(SummerOlympics20102Ctry.rda) 
 
 # calculate the mean and the maximum of GDP in the dataset. Store these as the
 # variables <mean.GDP> and <max.GDP> respectively.
