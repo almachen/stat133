@@ -99,11 +99,3 @@ bml.sim <- function(r, c, p){
 }
 
 
-#GRAPHS 
-
-#graph #1 is % free flowing vs density
-p_values <- c(0.3, 0.4, 0.5, 0.7, 0.8, 0.9)
-
-#graph #2 is % gridlock vs density
-
-#graph #3 is avg num steps taken till gridlock
