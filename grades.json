@@ -14,6 +14,19 @@
                     "earned": 16
                 }
             }
+        }, 
+        "hw4": {
+            "note": "", 
+            "hash": "c540a345d71c4534c78a653cf9f212acc10388ec", 
+            "earned": 17, 
+            "possible": 20, 
+            "penalty": 0, 
+            "parts": {
+                "hw4": {
+                    "possible": 20, 
+                    "earned": 17
+                }
+            }
         }
     }, 
     "login": "almachen", 
