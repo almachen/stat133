@@ -97,6 +97,7 @@ mostCommonLetter <- function(chvec){
 	chvec <- unlist(strsplit(chvec, ""))
 	chvec <- chvec[chvec != ""] 
 	tab <- table(chvec) 
+	mat <- table2matrix(tab)
 	letter <- max(as.vector(tab)) 
 	return(letter)
 
