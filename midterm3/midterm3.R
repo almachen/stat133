@@ -9,6 +9,12 @@
 #   <num.star>: an integer indicating how many elements of <chvec> contain the "*"
 #     symbol. For example: numStarElements(c('star', 'st*r', '***')) should return 2
 
+startest <-  c("star", "st*r", "****", "*dfd*")
+numStarElements <- function(chvec) {
+	indices <- grep("\\*", chvec)
+	return (length(indices)) 
+}
+
 
 
 # Write a function called numDigits that counts the number of (single) digits in
@@ -18,6 +24,17 @@
 #
 # and return the following
 #   <total>: A single number (the number of digits in chvec)
+
+digitstest <- c("sdf3klhsdf934") 
+digitstest1<- c("1z3p ! 21")
+digitstest2 <- c("abcdefg")
+
+numDigits <- function(chvec){
+	chvec <- unlist(strsplit(chvec, "")) 
+	indices <- grep("[[:digit:]]", chvec)
+	total <- length(indices)
+	return(total)  
+}
 
 
 
@@ -37,6 +54,19 @@
 # and return
 #   <theirchvec>: The same character vector with the required substitutions.
 
+histest <- c("he went to the store his mother gave him tthey himm he")
+hisToTheir <- function(chvec) {
+	chvec <- tolower(chvec) # convert to lower case 
+	space <- c(" ")
+	chvec <- paste(space, chvec, sep = "")
+	chvec <- paste(chvec, space, sep = "")
+	chvec <- gsub(" he ", " they ", chvec)
+	chvec <- gsub(" him ", " them ", chvec)
+	chvec <- gsub(" his ", " their ", chvec)
+	theirchvec <- substr(chvec, 2, nchar(chvec)-1)
+	return(theirchvec)
+
+}
 #A test case
 all.equal(
   hisToTheir("he went to the store his mother gave him"), 
@@ -57,3 +87,17 @@ all.equal(
 #  <letter> The most common letter or letters in the string.
 # For example mostCommonLetter("aabbccccdddd") should return 
 # [1] "c" "d"
+
+testletter <- c("aabbccccdddd")
+mostCommonLetter <- function(chvec){
+	chvec <- tolower(chvec) 
+	chvec <- gsub("[[:digit:]]", "", chvec)
+	chvec <- gsub("[[:punct:]]", "", chvec)
+	chvec <- gsub("[[:space:]]", "", chvec)
+	chvec <- unlist(strsplit(chvec, ""))
+	chvec <- chvec[chvec != ""] 
+	tab <- table(chvec) 
+	letter <- max(as.vector(tab)) 
+	return(letter)
+
+}
