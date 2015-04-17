@@ -9,7 +9,7 @@
 #   <num.star>: an integer indicating how many elements of <chvec> contain the "*"
 #     symbol. For example: numStarElements(c('star', 'st*r', '***')) should return 2
 
-startest <-  c("star", "st*r", "****", "*dfd*")
+#startest <-  c("star", "st*r", "****", "*dfd*")
 numStarElements <- function(chvec) {
 	indices <- grep("\\*", chvec)
 	return (length(indices)) 
@@ -25,9 +25,9 @@ numStarElements <- function(chvec) {
 # and return the following
 #   <total>: A single number (the number of digits in chvec)
 
-digitstest <- c("sdf3klhsdf934") 
-digitstest1<- c("1z3p ! 21")
-digitstest2 <- c("abcdefg")
+#digitstest <- c("sdf3klhsdf934") 
+#digitstest1<- c("1z3p ! 21")
+#digitstest2 <- c("abcdefg")
 
 numDigits <- function(chvec){
 	chvec <- unlist(strsplit(chvec, "")) 
@@ -54,7 +54,7 @@ numDigits <- function(chvec){
 # and return
 #   <theirchvec>: The same character vector with the required substitutions.
 
-histest <- c("he went to the store his mother gave him tthey himm he")
+#histest <- c("he went to the store his mother gave him tthey himm he")
 hisToTheir <- function(chvec) {
 	chvec <- tolower(chvec) # convert to lower case 
 	space <- c(" ")
@@ -88,7 +88,7 @@ all.equal(
 # For example mostCommonLetter("aabbccccdddd") should return 
 # [1] "c" "d"
 
-testletter <- c("aabbccccdddd")
+#testletter <- c("aabbccccdddd")
 mostCommonLetter <- function(chvec){
 	chvec <- tolower(chvec) 
 	chvec <- gsub("[[:digit:]]", "", chvec)
@@ -97,8 +97,12 @@ mostCommonLetter <- function(chvec){
 	chvec <- unlist(strsplit(chvec, ""))
 	chvec <- chvec[chvec != ""] 
 	tab <- table(chvec) 
-	mat <- table2matrix(tab)
-	letter <- max(as.vector(tab)) 
+	namesvec <- names(tab) 
+	letterindex <- max(as.vector(tab)) 
+	indices <- grep(letterindex, tab)
+	letter <- namesvec[indices]
+	
+
 	return(letter)
 
 }
