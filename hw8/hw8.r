@@ -1,3 +1,5 @@
+#simpleboot
+#boot.lm
 xUnique = 1:5
 trueCoeff = c(0, 1, 1)
 
@@ -18,6 +20,13 @@ genBootY = function(x, y, rep = TRUE){
   ### Return a vector of random y values the same length as y
   ### You can assume that the xs are sorted
   ### Hint use tapply here!
+  y_vec <- c() 
+
+  y_vec <- c(y_vec, sample(y, length(y), rep= TRUE)) 
+  
+
+ # y_vec <- (tapply(x, y, function(z) {sample(z, rep = TRUE)}) ) 
+  return (y_vec)  
   
 
 }
@@ -27,8 +36,12 @@ genBootR = function(fit, err, rep = TRUE){
   ### Add the errors to the fit to create a y vector
   ### Return a vector of y values the same length as fit
   ### HINT: It can be easier to sample the indices than the values
-  
+
+  err_vec <- sample(err, length(err), rep = FALSE) 
+  y <- fit + err_vec
+ return (y) 
  
+
 }
 
 fitModel = function(x, y, degree = 1){
@@ -38,7 +51,18 @@ fitModel = function(x, y, degree = 1){
   ### Return the coefficients as a vector 
   ### HINT: Take a look at the repBoot function to see how to use lm()
   
- 
+ df = data.frame(x,y)
+
+  if (degree == 1) {
+    
+    model <- lm(y~x, df)
+    coeff <- as.vector(model$coefficients)
+  } 
+
+  else { 
+    model <- lm(y~x +I(x^2), df)
+    coeff <- as.vector(model$coefficients)
+  } 
   return(coeff)
 }
 
@@ -49,7 +73,22 @@ oneBoot = function(data, fit = NULL, degree = 1){
 
  
   ### Use fitModel to fit a model to this bootstrap Y 
+ x <- data [ ,1]
+ y <- data [ ,2] 
  
+
+ if (is.null(fit)){ # this doesn't output length 50 
+  output <- genBootY(x, y)
+ }
+ else {
+  y_fit <- fit [ ,1]
+  y_res <- fit[, 2]
+  output <- genBootR(y_fit, y_res)
+ }
+
+ model <- fitModel(x, output, degree = degree) 
+ return (model) 
+
 }
 
 repBoot = function(data, B = 1000){
@@ -68,13 +107,24 @@ repBoot = function(data, B = 1000){
   ### Replicate a call to oneBoot B times for 
   ### each of the four conditions
   
+
+
+  coeff <- list() 
+  fit <- matrix(,length(data$x),2) 
+  x <- data[ , 1]
+  y <- data[ , 2]
+  fit_values <- lm(y ~ x)$fitted.values
+  residuals <- lm(y ~ x)$residuals 
+  fit[, 1] <- fit_values
+  fit[, 2] <- residuals 
+  #50 rows 2 columns
+
+  coeff[[1]] <- t(replicate(B, oneBoot(data, fit = NULL, degree = 1)))
+  coeff[[2]] <- t(replicate(B, oneBoot(data, fit = NULL, degree = 2)))
+  coeff[[3]] <- t(replicate(B, oneBoot(data, fit = fit, degree = 1)))
+  coeff[[4]] <- t(replicate(B, oneBoot(data, fit = fit, degree = 2)))
   
-  ### Format the return value so that you have a list of
-  ### length 4, one for each set of coefficients
-  ### each element will contain a matrix with B columns
-  ### and two or three rows, depending on whether the 
-  ### fit is for a line or a quadratic
-  ### Return this list
+
   
   return(coeff)
 } 
@@ -97,7 +147,40 @@ bootPlot = function(x, y, coeff, trueCoeff){
   ### Use trueCoeff to add true line/curve - 
   ###  Make the true line/curve stand out
 
-}
+  # curve order? 
+  #the curve for the trueCoeff 
+
+  plot ( y ~ x, type = "p")
+
+  if (ncol(coeff) == 3){
+
+    #mapply(curve, )
+
+  mapply( function(a, b, c) {
+    curve(a*(x^2) + b*x + c, add = TRUE, 
+      col = rgb (0, 0, 0.8, alpha = 0.2))},
+    coeff[, 3], coeff[, 2], coeff[ , 1])  
+
+  curve(trueCoeff[3]*x^2 + trueCoeff[2]*x + trueCoeff[1], add = TRUE,
+    col = "firebrick", lwd = 3)
+  }
+
+  else { 
+
+  #col2 = slope, col1 = intercept
+    
+
+    mapply(abline, a = coeff[ ,1], b = coeff[ ,2], 
+      col = rgb (0, 0.5, 0.5, alpha = .2))
+    
+
+  curve(trueCoeff[1]*x^2 + trueCoeff[2]*x + trueCoeff[3], add = TRUE, col = "firebrick", lwd = 3)
+  }
+
+  }
+ 
+
+
 
 ### Run your simulation by calling this function
 ### This function doesn't need any changing
@@ -105,7 +188,7 @@ runSim = function() {
   xUnique = 1:5
   trueCoeff = c(0, 1, 1)
   myData = getData(coefs = trueCoeff, xs = xUnique)
-  expt = repBoot(data = myData)
+  expt = repBoot(data = myData) # 
   par(mfrow = c(2, 2))
   for (i in 1:4){
    bootPlot(myData$x, myData$y, 
