@@ -1,0 +1,3 @@
+line 125: 'fit' here should be quadratic -2
+true curve should always be quadratic -2
+Score: 16/20
