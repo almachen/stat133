@@ -1,0 +1,9 @@
+w: wrong permutation  -1
+t  -2
+f1: women  -1
+f3 -1
+boxplot  -1
+scatterplot -6
+cache: use apply functions  -1
+
+Score: 20/33
