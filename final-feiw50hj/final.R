@@ -269,7 +269,7 @@ prop.rain <- sapply(rain, function(x) sum((x) !=0))
 # use an apply statment to the the plotting
 par(mfrow=c(2,3))
 
-apply(rain, 1:length(rain), function(x){ hist(x)})
+apply(rain, function(x) hist(x))
 
 
 #################################################################
