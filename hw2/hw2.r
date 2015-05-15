@@ -51,7 +51,7 @@
 # the hw3 directory in the file WR1500MeterMen.rda.
 
 # load the data
-
+load("WR1500MeterMen.rda")
 # The name of the object loaded is wr1500m
 # The time (in the column "times") in these data are recorded in seconds, 
 # and they are seconds over 3 minutes. 
@@ -71,8 +71,10 @@ wr.name <- wr1500m[which.min(wr1500m$times), 4]
 # Let's look at the relationship between date and time.
 # Q1c. What type of variable (numeric (continuous or discrete), nominal ordinal)
 # are year and times? (no need to save the output, just look at it)
-time - continuous
-date - discrete 
+
+# IBH : edits to make script executable
+#time - continuous
+#date - discrete 
 
 # When we are examining a variable to see how it changes in time,
 # we typically make a line plot, with time on the x-axes and 
@@ -85,7 +87,7 @@ date - discrete
 # store that in a new variable and add to the data frame.
 
 times_sec <- (wr1500m$times)+180
-wr1500m <- wr1500m <- cbind(wr1500m, times_sec)
+wr1500m <- cbind(wr1500m, times_sec)
 plot(wr1500m$year, wr1500m$times_sec, type = "s")
 
 
@@ -113,9 +115,9 @@ plot(wr1500m$new_year, wr1500m$times_sec, type = "s")
 # so that 2014 is included in the x-axis scale;
 # then use the lines() function to add the additional segment.
 
-<- wr1500m[51, "times_sec"]
-plot()
-lines((1998.583, 206), (2014, 206)) ??????????
+#<- wr1500m[51, "times_sec"]
+#plot()
+#lines((1998.583, 206), (2014, 206)) ??????????
 
 
 # Q4. There are two times where the record stood for several
@@ -163,11 +165,12 @@ load( "SummerOlympics2012Ctry.rda" )
 #Q6 Take a look at the variables in this data frame.
 # What kind of variable is GDP and population?
 
-GDP : continuous
-population : discrete
+# IBH edits to make file executable
+#GDP : continuous
+#population : discrete
 
 # What about Total?
-Total : discrete
+#Total : discrete
 
 
 # To examine the relationship between these three variables,
@@ -224,7 +227,7 @@ symbols(log(SO2012Ctry$pop), log(SO2012Ctry$GDP_per_person), circles = (SO2012Ct
 # where the countries are filled with a light grey color.
 
 ## you only need to run these two lines once:
-install.packages("maps")
+#install.packages("maps")
 library("maps")
 
 # world <- map( your code here )
@@ -257,7 +260,7 @@ library("maps")
 # e.g. myColor = "#FEB24CAA" or   "#FEB24C88"
 
 # You only need to call these two lines once:
-install.packages("RColorBrewer")
+#install.packages("RColorBrewer")
 library("RColorBrewer")
 
 # display.brewer.all( your code here )
@@ -289,7 +292,9 @@ library("RColorBrewer")
 
 #Q13. We are interested in the relationship between Sport and Sex. 
 # Examine the data frame and check which type of data each variable is.
-names(athletes)
+
+#names(athletes)
+
 ### Name : nominal
 ### Sex : nominal
 ### Sport : nominal
