@@ -44,6 +44,19 @@
                     "earned": 3
                 }
             }
+        }, 
+        "midterm4": {
+            "note": "", 
+            "hash": "8ee2233fde00c2814f76bac22044968c67915914", 
+            "earned": 18, 
+            "possible": 27, 
+            "penalty": 0, 
+            "parts": {
+                "midterm4": {
+                    "possible": 30, 
+                    "earned": 18
+                }
+            }
         }
     }, 
     "login": "almachen", 
