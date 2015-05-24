@@ -432,10 +432,14 @@ return (n.jackpot)
 
 # For B = 1000 and each value of k = 100, 500, 1000, 5000
 # Plot a histogram of the output from NumJackpot (i.e. four histograms)
-njack1 <- NumJackpot(100, 1000)
-njack2 <- NumJackpot(500, 1000)
-njack3 <- NumJackpot(1000, 1000)
-njack4 <- NumJackpot(5000, 1000)
+#njack1 <- NumJackpot(100, 1000) # inga
+#njack2 <- NumJackpot(500, 1000)
+#njack3 <- NumJackpot(1000, 1000)
+#njack4 <- NumJackpot(5000, 1000)
+njack1 <- NumJackpot(100, 100)
+njack2 <- NumJackpot(500, 100)
+njack3 <- NumJackpot(1000, 100)
+njack4 <- NumJackpot(5000, 100)
 
 hist(njack1)
 hist(njack2)
