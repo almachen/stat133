@@ -232,7 +232,10 @@ abline(v = 2.1)
 # Add an x-axis label and a title.
 
 par(mfrow  = c(1, 1) ) 
-hist(data3$GDP, breaks = 28, xlab = "GDP", main = "GDP of countries with IDA")
+## inga edited, data3 doesn't exist, changed to data2 to get partial credit...
+#hist(data3$GDP, breaks = 28, xlab = "GDP", main = "GDP of countries with IDA")
+hist(data2$GDP, breaks = 28, xlab = "GDP", main = "GDP of countries with IDA")
+
 #################################################################
 ##### PART III : apply statements [15 pts]
 
@@ -269,7 +272,10 @@ prop.rain <- sapply(rain, function(x) sum((x) !=0))
 # use an apply statment to the the plotting
 par(mfrow=c(2,3))
 
-apply(rain, function(x) hist(x))
+# inga edited, was apply, need sapply, caused error
+#apply(rain, function(x) hist(x))
+sapply(rain, function(x) hist(x))
+
 
 
 #################################################################
@@ -491,9 +497,10 @@ phrases2 <- sub("a", "@", phrases)
 # [2 pts]
 dna <- c("AGGATGATT", "AGCCTTAGC", "AGAGAGCT", "AGTTTCGTA", "CGTGGTGC", "CTAAGTGAC", "GTGGGACC", "GGTAGAGAC", "TAGATTACC")
 # Create a vector [match1] with the index for all matches to "A*T" or "G*T"
-indmatch1 <- grep(("A*T"|"G*T"), dna) 
+## inga commented out, command causes an error
+#indmatch1 <- grep(("A.T"|"G.T"), dna) 
 
-match1 <- dna[indmatch1]
+#match1 <- dna[indmatch1]
 
 # [2 pts]
 # Create a vector [dna2] where you have removed all entries whose length is not a multiple of 3
